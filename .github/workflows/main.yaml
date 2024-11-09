@@ -1,17 +1,24 @@
- name: CI
+name: CI
 
- on:
-   push:
-     branches:
-       - main
-
- jobs:
-   build:
-     runs-on: ubuntu-latest
-
-     steps:
-       - name: Get Your Code
-         uses: actions/checkout@v2
-
-       - name: Say Hello to the World
-         run: echo "Hello, World!"
+on:
+  push:
+    branches:
+      - main
+env:
+    ENV_VAR: asdf1234
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello to the World
+        run: echo "Hello, World!"
+      - name: Print Var
+        run: echo "This is ENV_VAR: $ENV_VAR"
+      - name: Make new Var
+        id: makeVar
+        run: |
+            echo "1234: $NUM_VAR"
+            echo "alpha123: $ALPHNUM_VAR"
+      - name: Print new Var
+        run: echo "This is NUM_VAR with curly braces ${{ makeVar.outputs.num_var }}, this is ALPHNUM_VAR with regular dollar sign: $ALPHNUM_VAR"
+        
