@@ -6,19 +6,31 @@ on:
       - main
 env:
     ENV_VAR: asdf1234
+    DAY_OF_WEEK: Monday
 jobs:
+  greeting_job:
+    runs-on: ubuntu-latest
+    env:
+      Greeting: Hello
+    steps:
+      - name: "Say Hello Mona it's Monday"
+        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+        env:
+          First_Name: Mona
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Say Hello to the World
         run: echo "Hello, World!"
       - name: Print Var
-        run: echo "This is ENV_VAR: $ENV_VAR"
+        run: |
+          echo "This is ENV_VAR: ${{ env.ENV_VAR }}"
       - name: Make new Var
         id: makeVar
         run: |
-            echo "1234: $NUM_VAR"
-            echo "alpha123: $ALPHNUM_VAR"
+          echo "NUM_VAR=1234" >> $GITHUB_ENV
+          echo "ALPHNUM_VAR=alpha123" >> $GITHUB_ENV
       - name: Print new Var
-        run: echo "This is NUM_VAR with curly braces ${{ makeVar.outputs.num_var }}, this is ALPHNUM_VAR with regular dollar sign: $ALPHNUM_VAR"
+        run: |
+          echo "This is NUM_VAR with curly braces ${{ env.NUM_VAR }}, this is ALPHNUM_VAR with regular dollar sign: $ALPHNUM_VAR"
         
