@@ -20,17 +20,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Say Hello to the World
-        run: echo "Hello, World!"
       - name: Print Var
-        run: |
-          echo "This is ENV_VAR: ${{ env.ENV_VAR }}"
-      - name: Make new Var
+        run: echo "This is echo ENV_VAR with no pipe, $ENV_VAR"
+      - name: Make new Var in GITHUB_ENV
         id: makeVar
         run: |
           echo "NUM_VAR=1234" >> $GITHUB_ENV
           echo "ALPHNUM_VAR=alpha123" >> $GITHUB_ENV
-      - name: Print new Var
+      - name: Print new Var from GITHUB_ENV
         run: |
           echo "This is NUM_VAR with curly braces ${{ env.NUM_VAR }}, this is ALPHNUM_VAR with regular dollar sign: $ALPHNUM_VAR"
         
